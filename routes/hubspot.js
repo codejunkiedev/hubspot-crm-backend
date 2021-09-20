@@ -55,7 +55,7 @@ router.get("/contacts", async (req, res) => {
                     firstname: item.properties.firstname.value,
                     lastname: item.properties.lastname.value,
                     properties: {
-                        label: "region",
+                        name: "region",
                         dataType: "STRING",
                         value: "abc"
                     }
