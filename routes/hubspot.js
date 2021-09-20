@@ -33,19 +33,52 @@ router.get("/contacts", async (req, res) => {
         const queryId = req.query.hs_object_id;
         if(err) res.send(err);
         const contacts = await getContacts(data);
+        // return res.json(contacts);
         var results = [];
-        // const found = contacts.find(element => element.vid == queryId);
+        const found = contacts.find(element => element.vid == queryId);
 
-        // var allResults = [];
-        // resultObj = {
-        //     objectId: found.vid,
-        //     firstname: found.properties.firstname.value
-        // }
-        // allResults.push(resultObj);
-        // var toSend = {
-        //     "results": allResults
-        // }
-        // return res.json(toSend);
+        var allResults = [];
+        var tempObj = {
+            objectId: found.vid,
+            firstname: found.properties.firstname.value,
+            lastname: found.properties.lastname.value,
+        }
+
+        if(typeof(found.properties.province) != undefined) {
+            if(found.properties.province.value == 'BC') {
+                tempObj.title = 'Pacific';
+                // properties.region = regionObj
+                // tempObj.properties = properties;
+
+            } else if(found.properties.province.value == 'AB' || found.properties.province.value == 'SK' || found.properties.province.value == 'MB') {
+                tempObj.title = 'Prairie';
+                // properties.value = 'Prairie';
+                // tempObj.properties = properties;
+            } else if(found.properties.province.value == 'ON' || found.properties.province.value ==='QC') {
+                tempObj.title = 'Eastern';
+                // properties.value = 'Eastern';
+                // tempObj.properties = properties;
+            } else if(found.properties.province.value == 'NB' || found.properties.province.value == 'NS' || found.properties.province.value == 'NF' || found.properties.province.value == 'PE') {
+                tempObj.title = 'Atlantic';
+                // properties.value = 'Atlantic';
+                // tempObj.properties = properties;
+            } else {
+                tempObj.title = 'Other';
+                // properties.value = 'Other';
+                // tempObj.properties = properties;
+            }
+            // properties.push(firstNameObj)
+            // properties.push(lastNameObj)
+            // // properties.push(emailObj);
+            // // properties.push(regionObj);
+            // tempObj.properties = properties;
+        }
+
+        allResults.push(tempObj);
+        var toSend = {
+            "results": allResults
+        }
+        return res.json(toSend);
 
         try {
             await Promise.all(contacts.map(async (item, index) => {
