@@ -34,6 +34,11 @@ router.get("/contacts", async (req, res) => {
                 var tempObj = {
                     objectId: item.vid
                 }
+                tempObj.properties = {
+                    label: "firstname",
+                    dataType: "STRING",
+                    value : item.properties.firstname.value
+                }
 
                 var properties= [];
                 var firstNameObj = {
@@ -84,11 +89,11 @@ router.get("/contacts", async (req, res) => {
                     // properties.value = 'Other';
                     // tempObj.properties = properties;
                 }
-                properties.push(firstNameObj)
-                properties.push(lastNameObj)
-                // properties.push(emailObj);
-                // properties.push(regionObj);
-                tempObj.properties = properties;
+                // properties.push(firstNameObj)
+                // properties.push(lastNameObj)
+                // // properties.push(emailObj);
+                // // properties.push(regionObj);
+                // tempObj.properties = properties;
                 console.log('Properies are ', properties)
                 results.push(tempObj);
             }));
