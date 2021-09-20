@@ -54,11 +54,6 @@ router.get("/contacts", async (req, res) => {
                     title: item.properties.firstname.value,
                     firstname: item.properties.firstname.value,
                     lastname: item.properties.lastname.value,
-                    properties: [{
-                        name: "region",
-                        dataType: "STRING",
-                        value: "abc"
-                    }]
                 }
                 // tempObj.properties = {
                 //     label: "firstname",
@@ -93,35 +88,38 @@ router.get("/contacts", async (req, res) => {
                 // } else {
                 //     tempObj.province = 'Not found'
                 // }
-                if(item.properties.province === 'BC') {
-                    regionObj.value = 'Pacific';
-                    // properties.region = regionObj
+                if(typeof(item.properties.province) !== undefined) {
+                    if(item.properties.province === 'BC') {
+                        tempObj.title = 'Pacific';
+                        // properties.region = regionObj
+                        // tempObj.properties = properties;
+    
+                    } else if(item.properties.province === 'AB' || item.properties.province === 'SK' || item.properties.province === 'MB') {
+                        tempObj.title = 'Prairie';
+                        // properties.value = 'Prairie';
+                        // tempObj.properties = properties;
+                    } else if(item.properties.province === 'ON' || item.properties.province === 'QC') {
+                        tempObj.title = 'Eastern';
+                        // properties.value = 'Eastern';
+                        // tempObj.properties = properties;
+                    } else if(item.properties.province === 'NB' || item.properties.province === 'NS' || item.properties.province === 'NF' || item.properties.province === 'PE') {
+                        tempObj.title = 'Atlantic';
+                        // properties.value = 'Atlantic';
+                        // tempObj.properties = properties;
+                    } else {
+                        tempObj.title = 'Other';
+                        // properties.value = 'Other';
+                        // tempObj.properties = properties;
+                    }
+                    // properties.push(firstNameObj)
+                    // properties.push(lastNameObj)
+                    // // properties.push(emailObj);
+                    // // properties.push(regionObj);
                     // tempObj.properties = properties;
-
-                } else if(item.properties.province === 'AB' || item.properties.province === 'SK' || item.properties.province === 'MB') {
-                    regionObj.value = 'Prairie';
-                    // properties.value = 'Prairie';
-                    // tempObj.properties = properties;
-                } else if(item.properties.province === 'ON' || item.properties.province === 'QC') {
-                    regionObj.value = 'Eastern';
-                    // properties.value = 'Eastern';
-                    // tempObj.properties = properties;
-                } else if(item.properties.province === 'NB' || item.properties.province === 'NS' || item.properties.province === 'NF' || item.properties.province === 'PE') {
-                    regionObj.value = 'Atlantic';
-                    // properties.value = 'Atlantic';
-                    // tempObj.properties = properties;
-                } else {
-                    regionObj.value = 'Other';
-                    // properties.value = 'Other';
-                    // tempObj.properties = properties;
+                    console.log('Properies are ', properties)
+                    results.push(tempObj);
                 }
-                // properties.push(firstNameObj)
-                // properties.push(lastNameObj)
-                // // properties.push(emailObj);
-                // // properties.push(regionObj);
-                // tempObj.properties = properties;
-                console.log('Properies are ', properties)
-                results.push(tempObj);
+                
             }));
             // results.sort((a, b) => a.region.localeCompare(b.region))
             var obj = {
