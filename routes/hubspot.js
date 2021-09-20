@@ -44,7 +44,7 @@ router.get("/contacts", async (req, res) => {
             lastname: found.properties.lastname.value,
         }
 
-        if(typeof(found.properties.province) != undefined) {
+        if(typeof(found.properties.province) != undefined || (found.properties.province) != 'undefined') {
             if(found.properties.province.value == 'BC') {
                 tempObj.title = 'Pacific';
                 // properties.region = regionObj
@@ -72,6 +72,8 @@ router.get("/contacts", async (req, res) => {
             // // properties.push(emailObj);
             // // properties.push(regionObj);
             // tempObj.properties = properties;
+        } else {
+            tempObj.title = 'Other';
         }
 
         allResults.push(tempObj);
