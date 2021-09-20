@@ -32,7 +32,7 @@ router.get("/contacts", async (req, res) => {
         try {
             await Promise.all(contacts.map(async (item, index) => {
                 var tempObj = {
-                    object_id: index,
+                    object_id: item.vid,
                     firstname: item.properties.firstname.value,
                     lastname: item.properties.lastname.value,
                     email: item.properties.email.value
