@@ -32,15 +32,23 @@ router.get("/contacts", async (req, res) => {
         try {
             await Promise.all(contacts.map(async (item, index) => {
                 var tempObj = {
-                    object_id: item.vid,
-                    firstname: item.properties.firstname.value,
-                    lastname: item.properties.lastname.value,
-                    email: item.properties.email.value
+                    object_id: item.vid
                 }
-                var properties= {
-                    label: "Region",
-                    dataType: "STRING"
+                var properties= [];
+                var firstNameObj = {
+                    label: "First Name",
+                    dataType: "STRING",
+                    value = item.properties.firstname.value
                 }
+                var lastNameObj = {
+                    label: "Last Name",
+                    dataType: "STRING",
+                    value = item.properties.firstname.value
+                }
+                properties.push(firstNameObj)
+                properties.push(lastNameObj)
+                tempObj.properties = properties;
+
                 if(item.properties.province) {
                     tempObj.province = item.properties.province.value
                 } else {
@@ -48,25 +56,25 @@ router.get("/contacts", async (req, res) => {
                 }
                 if(tempObj.province === 'BC') {
                     tempObj.region = 'Pacific';
-                    properties.value = 'Pacific';
-                    tempObj.properties = properties;
+                    // properties.value = 'Pacific';
+                    // tempObj.properties = properties;
 
                 } else if(tempObj.province === 'AB' || tempObj.province === 'SK' || tempObj.province === 'MB') {
                     tempObj.region = 'Prairie';
-                    properties.value = 'Prairie';
-                    tempObj.properties = properties;
+                    // properties.value = 'Prairie';
+                    // tempObj.properties = properties;
                 } else if(tempObj.province === 'ON' || tempObj.province === 'QC') {
                     tempObj.region = 'Eastern';
-                    properties.value = 'Eastern';
-                    tempObj.properties = properties;
+                    // properties.value = 'Eastern';
+                    // tempObj.properties = properties;
                 } else if(tempObj.province === 'NB' || tempObj.province === 'NS' || tempObj.province === 'NF' || tempObj.province === 'PE') {
                     tempObj.region = 'Atlantic';
-                    properties.value = 'Atlantic';
-                    tempObj.properties = properties;
+                    // properties.value = 'Atlantic';
+                    // tempObj.properties = properties;
                 } else {
                     tempObj.region = 'Other';
-                    properties.value = 'Other';
-                    tempObj.properties = properties;
+                    // properties.value = 'Other';
+                    // tempObj.properties = properties;
                 }
                 results.push(tempObj);
             }));
