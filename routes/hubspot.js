@@ -32,9 +32,14 @@ router.get("/contacts", async (req, res) => {
         try {
             await Promise.all(contacts.map(async (item, index) => {
                 var tempObj = {
+                    object_id: index,
                     firstname: item.properties.firstname.value,
                     lastname: item.properties.lastname.value,
                     email: item.properties.email.value
+                }
+                var properties= {
+                    label: "Region",
+                    dataType: "STRING"
                 }
                 if(item.properties.province) {
                     tempObj.province = item.properties.province.value
@@ -42,15 +47,26 @@ router.get("/contacts", async (req, res) => {
                     tempObj.province = 'Not found'
                 }
                 if(tempObj.province === 'BC') {
-                    tempObj.region = 'Pacific'
+                    tempObj.region = 'Pacific';
+                    properties.value = 'Pacific';
+                    tempObj.properties = properties;
+
                 } else if(tempObj.province === 'AB' || tempObj.province === 'SK' || tempObj.province === 'MB') {
-                    tempObj.region = 'Prairie'
+                    tempObj.region = 'Prairie';
+                    properties.value = 'Prairie';
+                    tempObj.properties = properties;
                 } else if(tempObj.province === 'ON' || tempObj.province === 'QC') {
-                    tempObj.region = 'Eastern'
+                    tempObj.region = 'Eastern';
+                    properties.value = 'Eastern';
+                    tempObj.properties = properties;
                 } else if(tempObj.province === 'NB' || tempObj.province === 'NS' || tempObj.province === 'NF' || tempObj.province === 'PE') {
-                    tempObj.region = 'Atlantic'
+                    tempObj.region = 'Atlantic';
+                    properties.value = 'Atlantic';
+                    tempObj.properties = properties;
                 } else {
-                    tempObj.region = 'Other'
+                    tempObj.region = 'Other';
+                    properties.value = 'Other';
+                    tempObj.properties = properties;
                 }
                 results.push(tempObj);
             }));
