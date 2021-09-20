@@ -26,25 +26,22 @@ router.post("/code", async (req, res) => {
 
 router.get("/contacts", async (req, res) => {
     const accessToken = fs.readFile('token.txt','utf8', async function(err, data) {
+        const queryId = req.query.hs_object_id;
         if(err) res.send(err);
         const contacts = await getContacts(data);
         var results = [];
-        // const found = contacts.find(element => element.vid == queryId);
+        const found = contacts.find(element => element.vid == queryId);
 
-        // var allResults = [];
-        // resultObj = {
-        //     objectId: found.vid,
-        //     properties: {
-        //         label: "firstname",
-        //         dataType: "STRING",
-        //         value : found.properties.firstname.value
-        //     }
-        // }
-        // var toSend = {
-        //     "results": resultObj
-        // }
-        // allResults.push(toSend);
-        // return res.send(allResults);
+        var allResults = [];
+        resultObj = {
+            objectId: found.vid,
+            firstname: found.properties.firstname.value
+        }
+        allResults.push(resultObj);
+        var toSend = {
+            "results": allResults
+        }
+        return res.json(toSend);
 
         try {
             await Promise.all(contacts.map(async (item, index) => {
