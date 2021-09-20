@@ -34,51 +34,65 @@ router.get("/contacts", async (req, res) => {
                 var tempObj = {
                     objectId: item.vid
                 }
+
                 var properties= [];
                 var firstNameObj = {
-                    label: "First Name",
+                    label: "firstname",
                     dataType: "STRING",
                     value : item.properties.firstname.value
                 }
                 var lastNameObj = {
-                    label: "Last Name",
+                    label: "lastname",
                     dataType: "STRING",
-                    value : item.properties.firstname.value
+                    value : item.properties.lastname.value
                 }
-                properties.push(firstNameObj)
-                properties.push(lastNameObj)
-                tempObj.properties = properties;
+                var emailObj = {
+                    label: "email",
+                    dataType: "STRING",
+                    value : item.properties.email.value
+                }
+    
+                var regionObj = {
+                    label: "region",
+                    dataType: "STRING"
+                }
 
                 // if(item.properties.province) {
                 //     tempObj.province = item.properties.province.value
                 // } else {
                 //     tempObj.province = 'Not found'
                 // }
-                // if(tempObj.province === 'BC') {
-                //     tempObj.region = 'Pacific';
-                //     properties.value = 'Pacific';
-                //     tempObj.properties = properties;
+                if(item.properties.province === 'BC') {
+                    regionObj.value = 'Pacific';
+                    // properties.region = regionObj
+                    // tempObj.properties = properties;
 
-                // } else if(tempObj.province === 'AB' || tempObj.province === 'SK' || tempObj.province === 'MB') {
-                //     tempObj.region = 'Prairie';
-                //     properties.value = 'Prairie';
-                //     tempObj.properties = properties;
-                // } else if(tempObj.province === 'ON' || tempObj.province === 'QC') {
-                //     tempObj.region = 'Eastern';
-                //     properties.value = 'Eastern';
-                //     tempObj.properties = properties;
-                // } else if(tempObj.province === 'NB' || tempObj.province === 'NS' || tempObj.province === 'NF' || tempObj.province === 'PE') {
-                //     tempObj.region = 'Atlantic';
-                //     properties.value = 'Atlantic';
-                //     tempObj.properties = properties;
-                // } else {
-                //     tempObj.region = 'Other';
-                //     properties.value = 'Other';
-                //     tempObj.properties = properties;
-                // }
+                } else if(item.properties.province === 'AB' || item.properties.province === 'SK' || item.properties.province === 'MB') {
+                    regionObj.value = 'Prairie';
+                    // properties.value = 'Prairie';
+                    // tempObj.properties = properties;
+                } else if(item.properties.province === 'ON' || item.properties.province === 'QC') {
+                    regionObj.value = 'Eastern';
+                    // properties.value = 'Eastern';
+                    // tempObj.properties = properties;
+                } else if(item.properties.province === 'NB' || item.properties.province === 'NS' || item.properties.province === 'NF' || item.properties.province === 'PE') {
+                    regionObj.value = 'Atlantic';
+                    // properties.value = 'Atlantic';
+                    // tempObj.properties = properties;
+                } else {
+                    regionObj.value = 'Other';
+                    // properties.value = 'Other';
+                    // tempObj.properties = properties;
+                }
+                properties.push(regionObj);
+                properties.push(firstNameObj)
+                properties.push(lastNameObj)
+                properties.push(emailObj);
+                tempObj.properties = properties;
+                console.log('Properies are ', properties)
                 results.push(tempObj);
             }));
-            results.sort((a, b) => a.region.localeCompare(b.region))
+            // results.sort((a, b) => a.region.localeCompare(b.region))
             var obj = {
                 results: results
             }
