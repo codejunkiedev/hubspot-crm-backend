@@ -84,10 +84,10 @@ router.get("/contacts", async (req, res) => {
                     // properties.value = 'Other';
                     // tempObj.properties = properties;
                 }
-                properties.push(regionObj);
                 properties.push(firstNameObj)
                 properties.push(lastNameObj)
-                properties.push(emailObj);
+                // properties.push(emailObj);
+                // properties.push(regionObj);
                 tempObj.properties = properties;
                 console.log('Properies are ', properties)
                 results.push(tempObj);
