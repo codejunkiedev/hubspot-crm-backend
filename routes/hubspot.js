@@ -51,6 +51,7 @@ router.get("/contacts", async (req, res) => {
             await Promise.all(contacts.map(async (item, index) => {
                 var tempObj = {
                     objectId: item.vid,
+                    title: item.properties.firstname.value,
                     firstname: item.properties.firstname.value,
                     lastname: item.properties.lastname.value
                 }
