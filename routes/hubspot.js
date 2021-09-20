@@ -29,35 +29,39 @@ router.get("/contacts", async (req, res) => {
         if(err) res.send(err);
         const contacts = await getContacts(data);
         var results = [];
-        await Promise.all(contacts.map(async (item, index) => {
-            var tempObj = {
-                firstname: item.properties.firstname.value,
-                lastname: item.properties.lastname.value,
-                email: item.properties.email.value
+        try {
+            await Promise.all(contacts.map(async (item, index) => {
+                var tempObj = {
+                    firstname: item.properties.firstname.value,
+                    lastname: item.properties.lastname.value,
+                    email: item.properties.email.value
+                }
+                if(item.properties.province) {
+                    tempObj.province = item.properties.province.value
+                } else {
+                    tempObj.province = 'Not found'
+                }
+                if(tempObj.province === 'BC') {
+                    tempObj.region = 'Pacific'
+                } else if(tempObj.province === 'AB' || tempObj.province === 'SK' || tempObj.province === 'MB') {
+                    tempObj.region = 'Prairie'
+                } else if(tempObj.province === 'ON' || tempObj.province === 'QC') {
+                    tempObj.region = 'Eastern'
+                } else if(tempObj.province === 'NB' || tempObj.province === 'NS' || tempObj.province === 'NF' || tempObj.province === 'PE') {
+                    tempObj.region = 'Atlantic'
+                } else {
+                    tempObj.region = 'Other'
+                }
+                results.push(tempObj);
+            }));
+            results.sort((a, b) => a.region.localeCompare(b.region))
+            var obj = {
+                results: results
             }
-            if(item.properties.province) {
-                tempObj.province = item.properties.province.value
-            } else {
-                tempObj.province = 'Not found'
-            }
-            if(tempObj.province === 'BC') {
-                tempObj.region = 'Pacific'
-            } else if(tempObj.province === 'AB' || tempObj.province === 'SK' || tempObj.province === 'MB') {
-                tempObj.region = 'Prairie'
-            } else if(tempObj.province === 'ON' || tempObj.province === 'QC') {
-                tempObj.region = 'Eastern'
-            } else if(tempObj.province === 'NB' || tempObj.province === 'NS' || tempObj.province === 'NF' || tempObj.province === 'PE') {
-                tempObj.region = 'Atlantic'
-            } else {
-                tempObj.region = 'Other'
-            }
-            results.push(tempObj);
-        }));
-        results.sort((a, b) => a.region.localeCompare(b.region))
-        var obj = {
-            results: results
+            res.json(obj);
+        } catch(err) {
+            res.send(err);
         }
-        res.json(obj);
     });
  
 });
