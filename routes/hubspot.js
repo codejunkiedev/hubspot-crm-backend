@@ -13,14 +13,18 @@ var hubspot = new Hubspot({
 router.post("/code", async (req, res) => {
     var code = req.body.code;
     if(code) {
-        const accessToken = await exchangeTokenForCode(code);
-        fs.writeFile('token.txt', accessToken['access_token'], function (err) {
-            if (err) throw err;
-        });
-        var obj = {
-            message: "Access token saved"
+        try {
+            const accessToken = await exchangeTokenForCode(code);
+            fs.writeFile('token.txt', accessToken['access_token'], function (err) {
+                if (err) throw err;
+            });
+            var obj = {
+                message: "Access token saved"
+            }
+            return res.json(obj);
+        } catch(err) {
+            return res.send(err);
         }
-        res.json(obj);
     }
 })
 
