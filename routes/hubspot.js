@@ -7,7 +7,7 @@ const fs = require('fs');
 var hubspot = new Hubspot({
     clientId: '6b7cd4dc-9a35-413f-9242-90ab7dd07ef7',
     clientSecret: 'c0b64240-a75b-4bd9-be4e-0110b2e9ad94',
-    redirectUri: 'http://localhost:3000/callback'
+    redirectUri: 'https://hubspotcrm-653b7.web.app/callback'
 });
 
 router.post("/code", async (req, res) => {
