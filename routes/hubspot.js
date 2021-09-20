@@ -32,7 +32,7 @@ router.get("/contacts", async (req, res) => {
         try {
             await Promise.all(contacts.map(async (item, index) => {
                 var tempObj = {
-                    object_id: item.vid
+                    objectId: item.vid
                 }
                 var properties= [];
                 var firstNameObj = {
@@ -49,33 +49,33 @@ router.get("/contacts", async (req, res) => {
                 properties.push(lastNameObj)
                 tempObj.properties = properties;
 
-                if(item.properties.province) {
-                    tempObj.province = item.properties.province.value
-                } else {
-                    tempObj.province = 'Not found'
-                }
-                if(tempObj.province === 'BC') {
-                    tempObj.region = 'Pacific';
-                    // properties.value = 'Pacific';
-                    // tempObj.properties = properties;
+                // if(item.properties.province) {
+                //     tempObj.province = item.properties.province.value
+                // } else {
+                //     tempObj.province = 'Not found'
+                // }
+                // if(tempObj.province === 'BC') {
+                //     tempObj.region = 'Pacific';
+                //     properties.value = 'Pacific';
+                //     tempObj.properties = properties;
 
-                } else if(tempObj.province === 'AB' || tempObj.province === 'SK' || tempObj.province === 'MB') {
-                    tempObj.region = 'Prairie';
-                    // properties.value = 'Prairie';
-                    // tempObj.properties = properties;
-                } else if(tempObj.province === 'ON' || tempObj.province === 'QC') {
-                    tempObj.region = 'Eastern';
-                    // properties.value = 'Eastern';
-                    // tempObj.properties = properties;
-                } else if(tempObj.province === 'NB' || tempObj.province === 'NS' || tempObj.province === 'NF' || tempObj.province === 'PE') {
-                    tempObj.region = 'Atlantic';
-                    // properties.value = 'Atlantic';
-                    // tempObj.properties = properties;
-                } else {
-                    tempObj.region = 'Other';
-                    // properties.value = 'Other';
-                    // tempObj.properties = properties;
-                }
+                // } else if(tempObj.province === 'AB' || tempObj.province === 'SK' || tempObj.province === 'MB') {
+                //     tempObj.region = 'Prairie';
+                //     properties.value = 'Prairie';
+                //     tempObj.properties = properties;
+                // } else if(tempObj.province === 'ON' || tempObj.province === 'QC') {
+                //     tempObj.region = 'Eastern';
+                //     properties.value = 'Eastern';
+                //     tempObj.properties = properties;
+                // } else if(tempObj.province === 'NB' || tempObj.province === 'NS' || tempObj.province === 'NF' || tempObj.province === 'PE') {
+                //     tempObj.region = 'Atlantic';
+                //     properties.value = 'Atlantic';
+                //     tempObj.properties = properties;
+                // } else {
+                //     tempObj.region = 'Other';
+                //     properties.value = 'Other';
+                //     tempObj.properties = properties;
+                // }
                 results.push(tempObj);
             }));
             results.sort((a, b) => a.region.localeCompare(b.region))
