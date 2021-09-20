@@ -30,10 +30,10 @@ router.post("/code", async (req, res) => {
 
 router.get("/contacts", async (req, res) => {
     const accessToken = fs.readFile('token.txt','utf8', async function(err, data) {
-        const queryId = req.query.hs_object_id;
+        // const queryId = req.query.hs_object_id;
         if(err) res.send(err);
         const contacts = await getContacts(data);
-        // return res.json(contacts);
+        return res.json(contacts);
         var results = [];
         const found = contacts.find(element => element.vid == queryId);
 
@@ -184,9 +184,10 @@ const exchangeTokenForCode = async (code) => {
 
 const getContacts = async(accessToken) => {
     var allContacts = [];
+    var hasMore = false;
     var contacts = await getContactsAPI(accessToken, hasMore, 'offset');
     allContacts = contacts.contacts;
-    var hasMore = contacts["has-more"];
+    hasMore = contacts["has-more"];
     while(hasMore) {
         contacts = await getContactsAPI(accessToken, hasMore, contacts["vid-offset"]);
         [allContacts, ...contacts.contacts];
