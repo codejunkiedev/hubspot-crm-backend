@@ -53,7 +53,12 @@ router.get("/contacts", async (req, res) => {
                     objectId: item.vid,
                     title: item.properties.firstname.value,
                     firstname: item.properties.firstname.value,
-                    lastname: item.properties.lastname.value
+                    lastname: item.properties.lastname.value,
+                    properties: {
+                        label: "region",
+                        dataType: "STRING",
+                        value: "abc"
+                    }
                 }
                 // tempObj.properties = {
                 //     label: "firstname",
