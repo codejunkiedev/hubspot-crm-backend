@@ -38,12 +38,12 @@ router.get("/contacts", async (req, res) => {
                 var firstNameObj = {
                     label: "First Name",
                     dataType: "STRING",
-                    value = item.properties.firstname.value
+                    value : item.properties.firstname.value
                 }
                 var lastNameObj = {
                     label: "Last Name",
                     dataType: "STRING",
-                    value = item.properties.firstname.value
+                    value : item.properties.firstname.value
                 }
                 properties.push(firstNameObj)
                 properties.push(lastNameObj)
