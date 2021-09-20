@@ -54,11 +54,11 @@ router.get("/contacts", async (req, res) => {
                     title: item.properties.firstname.value,
                     firstname: item.properties.firstname.value,
                     lastname: item.properties.lastname.value,
-                    properties: {
+                    properties: [{
                         name: "region",
                         dataType: "STRING",
                         value: "abc"
-                    }
+                    }]
                 }
                 // tempObj.properties = {
                 //     label: "firstname",
