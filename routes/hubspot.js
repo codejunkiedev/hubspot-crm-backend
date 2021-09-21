@@ -90,7 +90,9 @@ const getContacts = async(accessToken) => {
     hasMore = contacts["has-more"];
     while(hasMore) {
         contacts = await getContactsAPI(accessToken, hasMore, contacts["vid-offset"]);
-        [allContacts, ...contacts.contacts];
+        allContacts.push(...contacts.contacts)
+        // [allContacts, ...contacts.contacts];
+        // await allContacts.concat(contacts['contacts']);
         hasMore = contacts["has-more"];
     }
     return allContacts;
