@@ -43,7 +43,8 @@ router.get("/contacts", async (req, res) => {
             lastname: found.properties.lastname.value,
         }
 
-        if(typeof(found.properties.province) != undefined || (found.properties.province) != 'undefined') {
+        // if(typeof(found.properties.province) != undefined || (found.properties.province) != 'undefined') {
+        if(found.properties.hasOwnProperty('province')) {
             if(found.properties.province.value == 'BC') {
                 tempObj.title = 'Pacific';
             } else if(found.properties.province.value == 'AB' || found.properties.province.value == 'SK' || found.properties.province.value == 'MB') {
